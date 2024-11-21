@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Profile</title>
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            width: 900px;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Left Panel */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            width: 330px;
+            height: 1150px;
+        }
+
+        /* Photo Panel */
+        .photo-panel {
+            background-image: url('profile-pic.jpg');
+            background-position: center;
+            background-size: cover;
+            height: 50%;
+        }
+
+        /* Text Content */
+        .text-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .text-content h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .text-content section {
+            margin-bottom: 20px;
+        }
+
+        .text-content .nccu-icon img {
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Right Panel */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            width: 540px;
+            height: 1150px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* Education Section (Timeline) */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .year {
+            font-weight: bold;
+        }
+
+        .description {
+            margin-left: 10px;
+        }
+
+        /* Homework and Favorite Music Lists */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="photo-panel"></div>
+            <div class="text-content">
+                <section class="about-me">
+                    <h2>About Me</h2>
+                    <p>This is a short bio about the individual.</p>
+                </section>
+                <section class="contact-info">
+                    <h2>Contact Info</h2>
+                    <p>Email: example@example.com</p>
+                    <p>Phone: 123-456-7890</p>
+                </section>
+                <div class="nccu-icon">
+                    <img src="nccu-icon.png" alt="NCCU Icon">
+                </div>
+            </div>
+        </div>
+        <div class="right-panel">
+            <section class="education">
+                <h2>Education</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="year">2022</span>
+                        <p class="description">Bachelor of Science in Computer Science</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="year">2021</span>
+                        <p class="description">High School Diploma</p>
+                    </div>
+                </div>
+            </section>
+            <section class="homework">
+                <h2>Homework List</h2>
+                <ul>
+                    <li>Math Homework</li>
+                    <li>History Essay</li>
+                    <li>Computer Science Project</li>
+                </ul>
+            </section>
+            <section class="favorite-music">
+                <h2>Favorite Music</h2>
+                <ul>
+                    <li>Rock</li>
+                    <li>Jazz</li>
+                    <li>Classical</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
