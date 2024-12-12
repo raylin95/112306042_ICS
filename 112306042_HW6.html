@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>113356007_HW6_1A2B</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .log {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>113356007_HW6_1A2B</h1>
+
+  <input id="inputField" type="text" placeholder="請輸入4個不重複的數字" maxlength="4">
+  <button onclick="checkAnswer()">提交</button>
+
+  <div class="log" id="log"></div>
+
+  <script>
+    let answer = generateRandomAnswer();
+    let attemptCount = 0;
+
+    function generateRandomAnswer() {
+      const digits = Array.from({ length: 10 }, (_, i) => i);
+      const randomAnswer = [];
+
+      while (randomAnswer.length < 4) {
+        const randomIndex = Math.floor(Math.random() * digits.length);
+        randomAnswer.push(digits[randomIndex]);
+        digits.splice(randomIndex, 1);
+      }
+
+      return randomAnswer.join('');
+    }
+
+    function checkAnswer() {
+      const inputField = document.getElementById('inputField');
+      const userInput = inputField.value;
+      inputField.value = '';
+
+      if (userInput.length !== 4 || new Set(userInput).size !== 4 || /\D/.test(userInput)) {
+        alert('請輸入4個不重複的數字！');
+        return;
+      }
+
+      attemptCount++;
+
+      let aCount = 0;
+      let bCount = 0;
+
+      for (let i = 0; i < 4; i++) {
+        if (userInput[i] === answer[i]) {
+          aCount++;
+        } else if (answer.includes(userInput[i])) {
+          bCount++;
+        }
+      }
+
+      const log = document.getElementById('log');
+      const logEntry = document.createElement('p');
+      logEntry.textContent = `第${attemptCount}次: ${userInput} → ${aCount}A${bCount}B`;
+      log.appendChild(logEntry);
+
+      if (aCount === 4) {
+        alert(`恭喜答對！你共嘗試了 ${attemptCount} 次。`);
+        location.reload();
+      }
+    }
+
+    console.log('答案 (開發用):', answer); // 可刪除這行以隱藏答案
+  </script>
+</body>
+</html>
