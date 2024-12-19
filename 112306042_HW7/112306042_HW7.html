@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            width: 900px;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Left Panel */
+        .left-panel {
+            background-color: #333;
+            color: white;
+            width: 300px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .photo-panel {
+            width: 100%;
+            height: 300px;
+            background-image: url('profile-pic.jpg');
+            background-position: center;
+            background-size: cover;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .left-panel h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .left-panel .edit {
+            background: #555;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .left-panel section {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .left-panel h2 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .left-panel p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .left-panel .contact {
+            margin-top: auto;
+        }
+
+        .left-panel img {
+            margin-top: 10px;
+            width: 80px;
+            height: auto;
+        }
+
+        /* Right Panel */
+        .right-panel {
+            width: 600px;
+            padding: 20px;
+        }
+
+        .right-panel section {
+            margin-bottom: 30px;
+        }
+
+        .right-panel h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .right-panel .timeline {
+            margin-bottom: 20px;
+        }
+
+        .right-panel .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .right-panel .homework ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .right-panel .homework ul li a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        .right-panel .favorite-music img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .right-panel .favorite-music ul {
+            display: flex;
+            align-items: center;
+        }
+
+        .right-panel .favorite-music ul li {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="name-container">
+        <h1 id="name-display">RAY LIN</h1>
+        <input type="text" id="name-input" />
+        <button id="edit-save-button">edit</button>
+    </div>
+
+    <script>
+        const nameDisplay = document.getElementById('name-display');
+        const nameInput = document.getElementById('name-input');
+        const editSaveButton = document.getElementById('edit-save-button');
+
+        editSaveButton.addEventListener('click', () => {
+            if (editSaveButton.textContent === 'edit') {
+                // Switch to edit mode
+                nameInput.style.display = 'inline-block';
+                nameDisplay.style.display = 'none';
+                nameInput.value = nameDisplay.textContent;
+                editSaveButton.textContent = 'save';
+            } else {
+                // Save the new name
+                nameDisplay.textContent = nameInput.value;
+                nameInput.style.display = 'none';
+                nameDisplay.style.display = 'inline-block';
+                editSaveButton.textContent = 'edit';
+            }
+        });
+    </script>
+        <div class="nccu-icon">
+            <img src="nccu-icon.jpeg" alt="NCCU Icon">
+        </div>
+    </div>
+    
+        <div class="right-panel">
+            <section class="education">
+                <h2>Education</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span>2023 - now</span>
+                        <p>National Chengchi University, Department of MIS</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span>2021 - 2023</span>
+                        <p>The Affiliated Senior High School of National Taiwan Normal University</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span>2018 - 2021</span>
+                        <p>The Affiliated Senior High School of National Taiwan Normal University</p>
+                    </div>
+                </div>
+            </section>
+            <section class="homework">
+                <h2>Homework List</h2>
+                <ul>
+                    <li><a href="https://github.com/raylin95/112306042_ICS/blob/main/HW2-2.xlsx">HW2</a></li>
+                    <li><a href="https://github.com/raylin95/112306042_ICS/blob/main/112306042_HW5.html">HW5</a></li>
+                    <li><a href="https://github.com/raylin95/112306042_ICS/blob/main/112306042_HW6.html">HW6</a></li>
+                </ul>
+            </section>
+            <section class="favorite-music">
+                <h2>Favorite Music</h2>
+                <ul>
+                    <li>
+                        <a href="https://open.spotify.com/track/1iI8BxZmv2DTckaqAxgEzD?si=4923ea658d0e4f6a" target="_blank">
+                            <img src="spotify-icon.jpeg" alt="Spotify Icon for 愛情懸崖" style="width: 20px; height: 20px;">
+                        </a> 
+                        愛情懸崖
+                    </li>
+                                        <li>
+                        <a href="https://open.spotify.com/track/6Hu62PMTZtYh69FeEUrNBh?si=a6795df5af9447b4" target="_blank">
+                            <img src="spotify-icon.jpeg" alt="Spotify Icon for 你聽得到" style="width: 20px; height: 20px;">
+                        </a>
+                        你聽得到
+                    </li>
+                    <li>
+                        <a href="https://open.spotify.com/track/56mzU03ZesV0iRroHR2K04?si=cc89ffca6a914cf1" target="_blank">
+                            <img src="spotify-icon.jpeg" alt="Spotify Icon for 擱淺" style="width: 20px; height: 20px;">
+                        </a>
+                        擱淺
+                    </li>
+                                    </ul>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
