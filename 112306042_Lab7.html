@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 7 - Grades Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tfoot {
+            font-weight: bold;
+            background-color: #e8e8e8;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lab 7 - Grades Table</h1>
+
+    <!-- Input Section -->
+    <label for="mathGrade">Math Grade:</label>
+    <input type="number" id="mathGrade" min="0" max="100">
+
+    <label for="englishGrade">English Grade:</label>
+    <input type="number" id="englishGrade" min="0" max="100">
+
+    <button id="submitButton">Submit</button>
+
+    <!-- Grades Table -->
+    <table id="gradesTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Math Grade</th>
+                <th>English Grade</th>
+                <th>Average</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="1">Average</td>
+                <td id="mathAverage">-</td>
+                <td id="englishAverage">-</td>
+                <td id="overallAverage">-</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        const mathInput = document.getElementById('mathGrade');
+        const englishInput = document.getElementById('englishGrade');
+        const submitButton = document.getElementById('submitButton');
+        const gradesTable = document.getElementById('gradesTable').querySelector('tbody');
+        const mathAverageCell = document.getElementById('mathAverage');
+        const englishAverageCell = document.getElementById('englishAverage');
+        const overallAverageCell = document.getElementById('overallAverage');
+
+        let gradesData = [];
+
+        submitButton.addEventListener('click', () => {
+            const mathGrade = parseFloat(mathInput.value);
+            const englishGrade = parseFloat(englishInput.value);
+
+            if (isNaN(mathGrade) || isNaN(englishGrade)) {
+                alert('Please enter valid grades for both Math and English.');
+                return;
+            }
+
+            // Add grades to the data
+            gradesData.push({ math: mathGrade, english: englishGrade });
+
+            // Add row to the table
+            const row = document.createElement('tr');
+            const rowNumber = gradesData.length;
+            const rowAverage = ((mathGrade + englishGrade) / 2).toFixed(2);
+            row.innerHTML = `
+                <td>${rowNumber}</td>
+                <td>${mathGrade}</td>
+                <td>${englishGrade}</td>
+                <td>${rowAverage}</td>
+            `;
+            gradesTable.appendChild(row);
+
+            // Update averages
+            updateAverages();
+
+            // Clear inputs
+            mathInput.value = '';
+            englishInput.value = '';
+        });
+
+        function updateAverages() {
+            let totalMath = 0, totalEnglish = 0;
+            gradesData.forEach(grade => {
+                totalMath += grade.math;
+                totalEnglish += grade.english;
+            });
+
+            const mathAverage = (totalMath / gradesData.length).toFixed(2);
+            const englishAverage = (totalEnglish / gradesData.length).toFixed(2);
+            const overallAverage = ((totalMath + totalEnglish) / (gradesData.length * 2)).toFixed(2);
+
+            mathAverageCell.textContent = mathAverage;
+            englishAverageCell.textContent = englishAverage;
+            overallAverageCell.textContent = overallAverage;
+        }
+    </script>
+</body>
+</html>
