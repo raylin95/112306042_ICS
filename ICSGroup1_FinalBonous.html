@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheXNet: Deep Learning for Chest X-Ray Diagnosis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: background: linear-gradient(120deg, #f5b897, #f8c281, #f6b083);
+            ;
+            color: #778899;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #4fa3e1, #80b9e8, #1a67b2);
+            color: white;
+            text-align: center;
+            padding: 2em 0;
+            position: relative;
+            overflow: hidden;
+            animation: headerFadeIn 2s ease-out;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+            top: 0;
+            left: -100%;
+            animation: slide 4s infinite;
+        }
+
+        @keyframes slide {
+            from {
+                left: -100%;
+            }
+            to {
+                left: 100%;
+            }
+        }
+
+        @keyframes headerFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 3em;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            animation: bounce 2s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #F5F0F0;
+            padding: 0.5em 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: #F5F0F0;
+            text-decoration: none;
+            margin: 0 1em;
+            padding: 0.5em 1em;w
+            border-radius: 5px;
+            background: linear-gradient(135deg, #555, #444);
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: linear-gradient(135deg, #777, #555);
+            transform: scale(1.1);
+        }
+
+        main {
+            padding: 2em;
+        }
+
+        section {
+            margin: 2em 0;
+            padding: 1.5em;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        section h2 {
+            margin-top: 0;
+            font-size: 2em;
+            color: #212830;
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5em 0;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: background: linear-gradient(90deg, #4fa3e1, #80b9e8, #1a67b2);
+            ;
+            animation: gradientBar 4s infinite;
+        }
+
+        @keyframes gradientBar {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 100% 0;
+            }
+        }
+
+        /* Smooth Scroll Animation */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Button */
+        .scroll-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #302240;
+            color: white;
+            padding: 0.8em 1.2em;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            display: none;
+            z-index: 150;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .scroll-btn:hover {
+            transform: scale(1.2);
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const navLinks = document.querySelectorAll("nav a");
+            const scrollBtn = document.createElement("button");
+            scrollBtn.innerHTML = "⬆";
+            scrollBtn.classList.add("scroll-btn");
+            document.body.appendChild(scrollBtn);
+
+            navLinks.forEach(link => {
+                link.addEventListener("click", event => {
+                    event.preventDefault();
+                    const targetId = link.getAttribute("href").substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 60,
+                            behavior: "smooth"
+                        });
+                    }
+                });
+            });
+
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 300) {
+                    scrollBtn.style.display = "block";
+                } else {
+                    scrollBtn.style.display = "none";
+                }
+            });
+
+            scrollBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>CheXNet: Deep Learning for Chest X-Ray Diagnosis</h1>
+    </header>
+    <nav>
+        <a href="#introduction">Introduction</a>
+        <a href="#identification-methods">How CheXNet Works</a>
+        <a href="#examples">Model Architecture</a>
+        <a href="#future-trends">Advantages and Challenges</a>
+        <a href="#conclusion">Conclusion</a>
+        <a href="#references">Resource</a>
+    </nav>
+
+    <main>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>CheXNet is a deep learning model developed by Stanford University, designed to diagnose diseases in chest X-ray images. Built upon a 121-layer DenseNet architecture , the model takes frontal chest X-rays as input and outputs a heatmap indicating the probability of pneumonia at each pixel. Trained on the  ChestX-ray14 dataset, consisting of 112,120 labeled X-ray images with 14 thoracic diseases, CheXNet focuses on detecting pneumonia using a sigmoid activation for probability output, optimized with Adam and binary cross-entropy loss.</p>
+        </section>
+
+        <section id="identification-methods">
+            <h2>How CheXNet Works</h2>
+            <p><strong>1. Input the image:</strong> The patient’s chest X-ray is fed into the model.</p>
+            <p><strong>2. Identify features:</strong> The model, like an experienced doctor, identifies important details in the image, such as areas that look abnormal.</p>
+            <p><strong>3. Process the features:</strong> It further organizes and simplifies these details, making it easier for the model to make a decision.</p>
+            <p><strong>4. Make a decision:</strong> Based on the processed information, the model determines the likelihood of each disease (e.g., pneumonia) being present in the image.</p>
+            <p><strong>5. Display results:</strong> In addition to predictions, the model highlights potential problem areas on the image using heatmaps to indicate where attention is needed.</p>
+                    </section>
+
+        <section id="examples">
+            <h2>Model Architecture</h2>
+                <p><strong>3.1 Input Images and Labels</strong></p>
+                <p><strong>Input Data:</strong> Frontal-view chest X-ray images.</p>
+                <p><strong>Labels:</strong> Labels represent the information used to indicate the presence or absence of specific diseases in chest X-ray images. Each image is assigned a binary label for each of the 14 possible thoracic diseases.</p>
+                <p>This labeling system allows the model to be trained for multi-label classification, meaning it can identify multiple diseases in a single image by predicting the probability of each disease independently. These labels guide the model to learn patterns and features associated with each disease for accurate classification and detection.</p>
+                <p><strong>3.2 Pre-trained Model</strong></p>
+                <p>CheXNet employs a Convolutional Neural Network (CNN) with a DenseNet-121 architecture, pre-trained on the ImageNet dataset, to extract relevant features from input images.</p>
+                <p>CNNs are a class of deep learning models particularly effective for processing image data, as they automatically learn spatial hierarchies of features through multiple convolutional layers. DenseNet-121, a variant of CNNs, introduces dense connections, where each layer is connected to every preceding layer, enhancing feature reuse and improving model performance. This approach leverages transfer learning to enhance the model's performance in medical image analysis.</p>
+                <p><strong>3.3 Transition Layers</strong></p>
+                <p><strong>Function:</strong> Map the output features from the DenseNet to a unified dimension.</p>
+                <p><strong>Purpose:</strong> Ensure subsequent layers can effectively process the feature data while reducing computational complexity.</p>
+                <p><strong>3.4 Feature Activation Maps</strong></p>
+                <p><strong>Feature Maps:</strong> Highlight regions in the image associated with specific diseases.</p>
+                <p><strong>Visualization:</strong> Techniques like Gradient-weighted Class Activation Mapping (Grad-CAM) are used to generate heatmaps, indicating areas of interest within the X-ray.</p>
+                <p><strong>3.5 Weights and Prediction Layer</strong></p>
+                <p><strong>Weights:</strong> Derived from the prediction layer, emphasizing disease-related regions.</p>
+                <p><strong>Predictions:</strong> The model outputs probabilities for each of the 14 diseases, assisting in diagnosis.</p>
+                <p><strong>3.6 Heatmap Localization</strong></p>
+                <p><strong>Purpose:</strong> Identify the specific location of diseases within the image.</p>
+                <p><strong>Application:</strong> Assists radiologists in pinpointing abnormalities, enhancing diagnostic accuracy.</p>
+                <p><strong>3.7 Pooling Layers</strong></p>
+                <p><strong>Max Pooling:</strong> Captures the most prominent features, emphasizing significant regions.</p>
+                <p><strong>Log-Sum-Exp (LSE):</strong> Aggregates multiple feature values, maintaining stability.</p>
+                <p><strong>Average Pooling:</strong> Averages all feature values, reducing the risk of overfitting.</p>
+        </section>
+
+        <section id="future-trends">
+            <h2>Advantages and Challenges</h2>
+            <p><strong>4. Advantages and Challenges</strong></p>
+
+<p><strong>Advantages:</strong></p>
+<ul>
+    <li><strong>High Diagnostic Accuracy:</strong> Achieves performance comparable to, or exceeding, practicing radiologists.</li>
+    <li><strong>Multi-Disease Detection:</strong> Capable of identifying multiple diseases simultaneously.</li>
+    <li><strong>Efficient Processing:</strong> Rapidly analyzes large volumes of medical data.</li>
+    <li><strong>Result Visualization:</strong> Provides heatmaps to assist in interpreting results.</li>
+</ul>
+
+<p><strong>Challenges:</strong></p>
+<ul>
+    <li><strong>Data Annotation Requirements:</strong> Necessitates high-quality labeled datasets for training.</li>
+    <li><strong>Model Interpretability:</strong> Limited transparency in decision-making processes.</li>
+    <li><strong>Clinical Deployment:</strong> Must meet stringent regulatory standards for integration into healthcare settings.</li>
+    <li><strong>Technology Accessibility:</strong> Challenges remain in deploying such technology in developing regions.</li>
+</ul>
+
+        </section>
+
+        <section id="conclusion">
+            <h2>Conclusion</h2>
+            <p>CheXNet combines deep learning techniques with medical imaging analysis to offer a powerful tool for diagnosing thoracic diseases. As technology advances, CheXNet shows great potential in enhancing diagnostic accuracy and efficiency worldwide. Looking ahead, the model's future prospects include improving 
+                interpretability to build clinician trust, integrating multi-modal data from various imaging sources like MRI and CT scans, expanding its deployment in healthcare facilities globally, and providing real-time diagnostic support to reduce patient wait times. These advancements hold the promise of transforming healthcare by making diagnoses faster, more reliable, and accessible.</p>
+        </section>
+
+        <section id="references">
+            <h2>Resource</h2>
+            <ul>
+                <a href="https://www.ithome.com.tw/news/129973" target="_blank"><li>【AI浪潮席捲醫療業】透視5大類醫療影像辨識的AI應用場景</li></a>
+                
+                <a href="https://cynthiachuang.github.io/CheXNet-Pneumonia-Detection-on-Chest-X-Rays/" target="_blank"><li>Survey】CheXNet: 肺部 X-Ray 醫學影像判讀技術</li></a>
+                <a href="https://dosudodl.wordpress.com/2017/11/17/chexnet-%E8%B6%85%E8%B6%8A%E5%B0%88%E6%A5%AD%E6%94%BE%E5%B0%84%E7%A7%91%E9%86%AB%E7%94%9F%E7%9A%84%E8%82%BA%E9%83%A8xray%E9%86%AB%E5%AD%B8%E5%BD%B1%E5%83%8F%E5%88%A4%E8%AE%80%E6%8A%80%E8%A1%93/" target="_blank"><li>CheXNet : 超越專業放射科醫生的肺部Xray</li></a>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        Group1 林秉叡 廖偉翔 袁真豪
+    </footer>
+</body>
+
+</html>
+
