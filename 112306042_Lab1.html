@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Lab Exercise</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="center">About Me</h1>
+
+    <table>
+        <!-- Requirement #1 -->
+        <tr>
+            <td colspan="3" class="center"><b>About Me</b></td>
+        </tr>
+        <tr>
+            <!-- Image in the first column -->
+            <td rowspan="3">
+                <img src="personal-photo.jpg" alt="Personal Photo" width="150">
+                <p>Personal Photo</p>
+            </td>
+            <td>Name: <input type="text" name="name"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Gender:
+                <label><input type="radio" name="gender" value="male"> Male</label>
+                <label><input type="radio" name="gender" value="female"> Female</label>
+                <label><input type="radio" name="gender" value="other"> Other</label>
+            </td>
+            <td>Birthday: <input type="date" name="birthday"></td>
+        </tr>
+        <tr>
+            <td>
+                County: 
+                <select name="county">
+                    <option value="taipei">Taipei</option>
+                    <option value="tainan">Tainan</option>
+                    <option value="taichung">Taichung</option>
+                    <option value="taoyuan">Taoyuan</option>
+                </select>
+            </td>
+            <td>Email: <input type="email" name="email" placeholder="example@mail.com"></td>
+        </tr>
+    </table>
+
+    <table>
+        <!-- Requirement #2 -->
+        <tr>
+            <td>Hobby</td>
+            <td>
+                <label><input type="checkbox" name="hobby" value="swimming"> Swimming</label><br>
+                <label><input type="checkbox" name="hobby" value="volleyball"> Volleyball</label><br>
+                <label><input type="checkbox" name="hobby" value="movie"> Movie</label><br>
+                <label><input type="checkbox" name="hobby" value="game"> Game</label><br>
+                <label><input type="checkbox" name="hobby" value="sleep"> Sleep</label>
+            </td>
+        </tr>
+        <tr>
+            <td>Skill</td>
+            <td>
+                <label><input type="checkbox" name="skill" value="java"> Java</label><br>
+                <label><input type="checkbox" name="skill" value="html"> HTML</label><br>
+                <label><input type="checkbox" name="skill" value="python"> Python</label><br>
+                <label><input type="checkbox" name="skill" value="ms_office"> Microsoft Office</label><br>
+                <label><input type="checkbox" name="skill" value="premiere"> Premiere</label>
+            </td>
+        </tr>
+        <tr>
+            <td>Say something</td>
+            <td><textarea name="message" placeholder="Say something here..." rows="4" cols="30"></textarea></td>
+        </tr>
+    </table>
+</body>
+</html>
